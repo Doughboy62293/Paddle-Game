@@ -10,19 +10,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 
-public class Game extends JPanel{
-	private SimpleGame gameDrawing;
+public class Game extends JPanel implements Runnable{
+	MainMenuScreen menu;
 	private int screenWidth;
 	private int screenHeight;
 	
-	private JFrame frame = new JFrame("dunk-a-prof");
+	private JFrame frame;
 	
-	public Game(){
-	}
-	
-	
-	public void createAndShowGUI(){
-		Game game = new Game();
+	public void run(){
+		frame = new JFrame("Paddle Game");
 		screenWidth = 1280;
 		screenHeight = 720;
 		
@@ -30,29 +26,24 @@ public class Game extends JPanel{
 		frame.setSize(new Dimension(screenWidth, screenHeight));  //default is supposed to be 1280 x 720
 		frame.setVisible(true);
 		
-		gameDrawing = new SimpleGame();
-		gameDrawing.initializeGame();
+		
+		//gameDrawing = new SimpleGame();
+		//gameDrawing.initializeGame();
+		
+		menu = new MainMenuScreen(frame);
 		frame.getContentPane().removeAll();
-		frame.getContentPane().add(gameDrawing);
+		frame.getContentPane().add(menu);
 		frame.getContentPane().repaint();
-		gameDrawing.requestFocusInWindow();
+		menu.requestFocusInWindow();
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);	
-		frame.setTitle("Dunk-A-Prof");
-		frame.setVisible(true);	
+		frame.setTitle("Paddle Game");
+		//frame.setVisible(true);
 	}
 	
 	public static void main(String[] args){
-		final Game game = new Game();
-		SwingUtilities.invokeLater(new Runnable(){
-
-			@Override
-			public void run() {
-				game.createAndShowGUI();					
-			}
-			
-		});
+		(new Thread(new Game())).start();
 	}
 
 }

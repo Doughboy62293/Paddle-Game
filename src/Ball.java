@@ -11,8 +11,8 @@ import javax.swing.Timer;
 
 
 public class Ball extends SimpleGame implements ActionListener{
-	private int ballDiameter;
-	private int ballXPos;
+	private static int ballDiameter;
+	private static int ballXPos;
 	private int ballYPos;
 	private int speed;
 	private int ySpeed;
@@ -21,11 +21,28 @@ public class Ball extends SimpleGame implements ActionListener{
 	public Thread animate;
 	private BufferedImage ball_full;
 	private BufferedImage ball_full_resizable;
+	
+	public Ball(int speed){
+		this.speed = speed;
+		startSpeed = speed;
+		ySpeed = 0;
+		ballDiameter = 40;
+		ballXPos = 50;
+		ballYPos = 200;
+		
+		try {
+			
+			ball_full = ImageIO.read(getClass().getResource("Ball_full.png"));
+		} catch (IOException e) {
+		}
+		time = new Timer(5, this);
+		time.start();
+	}
 
 	public Ball(){
-		speed = 2;
+		speed = 4;
 		ySpeed = 0;
-		startSpeed = 2;
+		startSpeed = 4;
 		ballDiameter = 40;
 		ballXPos = 50;
 		ballYPos = 200;
@@ -34,8 +51,7 @@ public class Ball extends SimpleGame implements ActionListener{
 			ball_full = ImageIO.read(new File("Ball_full.png"));
 		} catch (IOException e) {
 		}
-		
-		time = new Timer(4, this);
+		time = new Timer(5, this);
 		time.start();
 	}
 	
@@ -73,12 +89,6 @@ public class Ball extends SimpleGame implements ActionListener{
 		
 	public void actionPerformed(ActionEvent e){
 		if(getKeepGoing()){
-			ballXPos = ballXPos + speed;
-			ballYPos = ballYPos + ySpeed;
-			
-			System.out.println(ballYPos + ballDiameter);
-			System.out.println(getHeight());
-			
 			if(ballYPos + (2*ballDiameter) > getHeight())
 				ySpeed = -1;
 	
@@ -94,6 +104,9 @@ public class Ball extends SimpleGame implements ActionListener{
 				speed = startSpeed;
 				setBallLeftOrRight(true);
 			}
+			
+			ballYPos = ballYPos + ySpeed;
+			ballXPos = ballXPos + speed;
 		}
 	}
 	
