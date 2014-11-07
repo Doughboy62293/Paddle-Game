@@ -139,6 +139,7 @@ private SimpleGame gameDrawing;
         	computerPaddleSpeed = 4;
 	    }else if (keyCode == "hard"){
         	ballSpeed = 6;
+        	computerPaddleSpeed = 8;
 	    }
 	}
 }
