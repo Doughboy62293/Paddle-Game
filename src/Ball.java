@@ -76,7 +76,10 @@ public class Ball extends SimpleGame implements ActionListener{
 			ballXPos = ballXPos + speed;
 			ballYPos = ballYPos + ySpeed;
 			
-			if(ballYPos > getHeight() - (ballDiameter/2))
+			System.out.println(ballYPos + ballDiameter);
+			System.out.println(getHeight());
+			
+			if(ballYPos + (2*ballDiameter) > getHeight())
 				ySpeed = -1;
 	
 			if(ballYPos < 1)
