@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,10 +27,6 @@ public class Game extends JPanel implements Runnable{
 		frame.setSize(new Dimension(screenWidth, screenHeight));  //default is supposed to be 1280 x 720
 		frame.setVisible(true);
 		
-		
-		//gameDrawing = new SimpleGame();
-		//gameDrawing.initializeGame();
-		
 		menu = new MainMenuScreen(frame);
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(menu);
@@ -39,11 +36,9 @@ public class Game extends JPanel implements Runnable{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);	
 		frame.setTitle("Paddle Game");
-		//frame.setVisible(true);
 	}
 	
 	public static void main(String[] args){
 		(new Thread(new Game())).start();
 	}
-
 }

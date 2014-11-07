@@ -19,30 +19,33 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	private int screenWidth;
 	private int screenHeight;
 	private static boolean keepGoing;
+	// Left = false, Right = true
+	private static boolean ballLeftOrRight;
 	
 	public SimpleGame(){
 		this.screenWidth = 1280;
 		this.screenHeight = 720;
 	}
 	
-	public void initializeGame(){	
+	public void initializeGame(int difficultySpeed, int computerSpeed){	
 		this.setFocusable(true);
 		this.addKeyListener(this);
 				
 		ballLeftOrRight = true;
 		keepGoing = false;
-		ball = new Ball(3);
+		ball = new Ball(difficultySpeed);
 		paddle1 = new Paddle1();
-		paddle2 = new Paddle2();
+		paddle2 = new Paddle2(computerSpeed);
 		score = new Scoreboard();
 		
 		time = new Timer(5, this);
 		time.start();
 	}
 	
-	// Left = false, Right = true
-	private static boolean ballLeftOrRight;
 	
+	/*
+	 * Accessor methods below
+	 */
 	public void setBallLeftOrRight(boolean value){
 		ballLeftOrRight = value;
 	}
@@ -59,6 +62,23 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		return screenHeight;
 	}
 	
+	public boolean getKeepGoing(){
+		return keepGoing;
+	}
+	
+	public void setKeepGoing(boolean value){
+		keepGoing = value;
+	}
+	
+	public void stopGame(){
+		keepGoing = false;
+		ball.setHorizontalSpeed(0);
+	}
+	
+	/*
+	 * Key Listeners below
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	public void keyPressed(KeyEvent e){
 	    int keyCode = e.getKeyCode();
 	    if(keepGoing){
@@ -81,9 +101,6 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	    repaint();
 	}
 	
-	/**
-	 * Error if all three are not overrided
-	 */
 	public void keyReleased(KeyEvent e){
 	    int keyCode = e.getKeyCode();
 	    if(keepGoing){
@@ -107,10 +124,13 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * Error if all three are not overrided
+	 * Error if all three are not overwritten
 	 */
 	public void keyTyped(KeyEvent e){}
 	
+	/**
+	 * Call the paint methods of all our objects here
+	 */
 	public void paintComponent(final Graphics g){
 		super.paintComponent(g);
 		
@@ -120,19 +140,9 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		score.paint(g);
 	}
 	
-	public boolean getKeepGoing(){
-		return keepGoing;
-	}
-	
-	public void setKeepGoing(boolean value){
-		keepGoing = value;
-	}
-	
-	public void stopGame(){
-		keepGoing = false;
-		ball.setHorizontalSpeed(0);
-	}
-	
+	/**
+	 * Check here to see status of game
+	 */
 	public void update(){
 		paddle2.setBallPos(ball.getBallYPos(), ball.getBallDiameter());
 		
@@ -150,6 +160,9 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 	
+	/**
+	 * Constantly check status and repaint
+	 */
 	public void actionPerformed(ActionEvent e){		
 		update();
 		repaint();

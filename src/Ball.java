@@ -20,8 +20,13 @@ public class Ball extends SimpleGame implements ActionListener{
 	private Timer time;
 	public Thread animate;
 	private BufferedImage ball_full;
-	private BufferedImage ball_full_resizable;
 	
+	/**
+	 * Constructor sets the default speed,
+	 * ball position, ball size, loads the 
+	 * ball image, and starts the timer
+	 * @param speed
+	 */
 	public Ball(int speed){
 		this.speed = speed;
 		startSpeed = speed;
@@ -38,42 +43,47 @@ public class Ball extends SimpleGame implements ActionListener{
 		time = new Timer(5, this);
 		time.start();
 	}
-
-	public Ball(){
-		speed = 4;
-		ySpeed = 0;
-		startSpeed = 4;
-		ballDiameter = 40;
-		ballXPos = 50;
-		ballYPos = 200;
-		
-		try {
-			ball_full = ImageIO.read(new File("Ball_full.png"));
-		} catch (IOException e) {
-		}
-		time = new Timer(5, this);
-		time.start();
-	}
 	
+	/*
+	 * Change the direction of the ball to go down
+	 */
 	public void downSpeed(){
 		ySpeed = 1;
 	}
-	
+
+	/*
+	 * Change the direction of the ball to go up
+	 */
 	public void upSpeed(){
 		ySpeed = -1;
 	}
 	
+	/*
+	 * Change the horizontal direction of the ball
+	 */
 	public void setHorizontalSpeed(int speed){
 		this.speed = speed;
 	}
 	
+	/**
+	 * Check to see if the ball hit the top half
+	 * of the stick or the bottom half.  If it hits
+	 * the top half, direct the ball upward, if it
+	 * hits the bottom half, direct the ball downward
+	 * @param yPos
+	 * @param height
+	 * @return
+	 */
 	public boolean topHalf(int yPos, int height){
-		if(ballYPos < (yPos + height) - (height/2))
+		if(ballYPos + (ballDiameter/2) < (yPos + height) - (height/2))
 			return true;
 		else
 			return false;
 	}
 	
+	/*
+	 * Accessor methods below
+	 */
 	public int getBallXPos(){
 		return ballXPos;
 	}
@@ -86,7 +96,11 @@ public class Ball extends SimpleGame implements ActionListener{
 		return ballDiameter;
 	}
 	
-		
+	/**
+	 * Constant check the direction of the ball,
+	 * if it hit a wall or a barrier, and change 
+	 * appropriate values
+	 */
 	public void actionPerformed(ActionEvent e){
 		if(getKeepGoing()){
 			if(ballYPos + (2*ballDiameter) > getHeight())
@@ -110,8 +124,10 @@ public class Ball extends SimpleGame implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Paint the basketball
+	 */
 	public void paint(Graphics g){
-		//ball_full_resizable.createGraphics();
 		g.drawImage(ball_full, ballXPos, ballYPos, ballDiameter, ballDiameter, null);
 	}
 }
