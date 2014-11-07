@@ -11,15 +11,17 @@ import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 
-public class Paddle1 extends SimpleGame implements ActionListener{
+public class Paddle2 extends SimpleGame implements ActionListener{
 	private Timer time;
 	private int xPos;
 	private int yPos;
+	private int currentBallYPos;
+	private int currentBallDiameter;
 	private int width;
 	private int height;
 	
-	public Paddle1(){
-		xPos = 30;
+	public Paddle2(){
+		xPos = 1200;
 		yPos = 20;
 		width = 20;
 		height = 100;
@@ -28,21 +30,11 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 		time.start();
 	}
 	
-	public boolean isAHit(int topYValue, int lengthOfObject){
-		if(topYValue > yPos-lengthOfObject && topYValue < yPos+height)
-			return true;
-		else
-			return false;
+	public void setBallPos(int currentBallYPos, int currentBallDiameter){
+		this.currentBallYPos = currentBallYPos;
+		this.currentBallDiameter = currentBallDiameter;
 	}
 	
-	public int getYPos(){
-		return yPos;
-	}
-	
-	public int getYHeight(){
-		return height;
-	}
-		
 	public void decYPos(int value){
 		if(yPos - ((height) / 2) < (getHeight() - (2 * height)))
 			yPos+=value;
@@ -51,6 +43,21 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 	public void incYPos(int value){
 		if(yPos > 0)
 			yPos-=value;
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if(getBallLeftOrRight() && getKeepGoing()){
+			if(currentBallYPos < yPos){
+				if(yPos > 0)
+					yPos-=2;
+			}
+			else if(currentBallYPos + (2*currentBallDiameter) > yPos + height){
+				if(yPos - ((height) / 2) < (getHeight() - (2 * height)))
+					yPos+=2;
+			}
+				
+		}
+
 	}
 	
 	public void paint(Graphics g){

@@ -14,25 +14,15 @@ public class Game extends JPanel{
 	private SimpleGame gameDrawing;
 	private int screenWidth;
 	private int screenHeight;
-    boolean keepPlaying;
 	
 	private JFrame frame = new JFrame("dunk-a-prof");
 	
 	public Game(){
-		keepPlaying = true;
 	}
 	
-	public void setKeepPlaying(){
-		keepPlaying = false;
-	}
-	
-	public boolean getKeepPlaying(){
-		return keepPlaying;
-	}
 	
 	public void createAndShowGUI(){
 		Game game = new Game();
-		keepPlaying = true;
 		screenWidth = 1280;
 		screenHeight = 720;
 		
@@ -59,7 +49,7 @@ public class Game extends JPanel{
 
 			@Override
 			public void run() {
-				game.createAndShowGUI();
+				game.createAndShowGUI();					
 			}
 			
 		});

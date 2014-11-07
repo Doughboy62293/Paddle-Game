@@ -6,15 +6,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 
 public class SimpleGame extends Game implements ActionListener, KeyListener {
 	private Ball ball;
 	private Paddle1 paddle1;
+	private Paddle2 paddle2;
+	private Scoreboard score;
 	Timer time;
 	private int screenWidth;
 	private int screenHeight;
+	private static boolean keepGoing;
 	
 	// Left = false, Right = true
 	private static boolean ballLeftOrRight;
@@ -43,29 +47,36 @@ public class SimpleGame extends Game implements ActionListener, KeyListener {
 	}
 	
 	public void initializeGame(){
-		paddle1 = new Paddle1();
-		ball = new Ball();
 		ballLeftOrRight = true;
-		time = new Timer(5, this);
+		keepGoing = true;
+		ball = new Ball();
+		paddle1 = new Paddle1();
+		paddle2 = new Paddle2();
+		score = new Scoreboard();
+		
+		
+		time = new Timer(4, this);
 		time.start();
 	}
 	
 	public void keyPressed(KeyEvent e){
 	    int keyCode = e.getKeyCode();
-	    switch( keyCode ) { 
-	        case KeyEvent.VK_UP:
-	            paddle1.incYPos(10);
-	            break;
-	        case KeyEvent.VK_DOWN:
-	            paddle1.decYPos(10);
-	            break;
-	        case KeyEvent.VK_LEFT:
-	            // handle left
-	            break;
-	        case KeyEvent.VK_RIGHT :
-	            // handle right
-	            break;
-	     }
+	    if(keepGoing){
+		    switch( keyCode ) { 
+		        case KeyEvent.VK_UP:
+		            paddle1.incYPos(10);
+		            break;
+		        case KeyEvent.VK_DOWN:
+		            paddle1.decYPos(10);
+		            break;
+		        case KeyEvent.VK_LEFT:
+		            // handle left
+		            break;
+		        case KeyEvent.VK_RIGHT :
+		            // handle right
+		            break;
+		    }
+	    }
 	    
 	    repaint();
 	}
@@ -80,17 +91,30 @@ public class SimpleGame extends Game implements ActionListener, KeyListener {
 	 */
 	public void keyTyped(KeyEvent e){}
 	
-	public void paintComponent(Graphics g){
+	public void paintComponent(final Graphics g){
 		super.paintComponent(g);
 
 		setLayout(null);
 		
 		ball.paint(g);
 		paddle1.paint(g);
+		paddle2.paint(g);
+		score.paint(g);
 	}
 	
-	public void actionPerformed(ActionEvent e){
-		if(!getBallLeftOrRight() && ball.getBallXPos() < 51){
+	public boolean getKeepGoing(){
+		return keepGoing;
+	}
+	
+	public void stopGame(){
+		keepGoing = false;
+		ball.setHorizontalSpeed(0);
+	}
+	
+	public void update(){
+		paddle2.setBallPos(ball.getBallYPos(), ball.getBallDiameter());
+		
+		if(!getBallLeftOrRight() && ball.getBallXPos() == 50){
 			System.out.println("1");
 			if(paddle1.isAHit(ball.getBallYPos(), ball.getBallDiameter())){
 				System.out.println("2");
@@ -100,11 +124,16 @@ public class SimpleGame extends Game implements ActionListener, KeyListener {
 				}else{
 					ball.downSpeed();
 				}
+				score.incScore(10);
+			}else{
+				stopGame();
 			}
 		}
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		update();
 		repaint();
-		
-		
 	}
 	
 }
