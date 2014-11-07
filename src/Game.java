@@ -10,14 +10,29 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 
-public class Game extends JPanel implements Runnable{
+public class Game extends JPanel{
 	private SimpleGame gameDrawing;
 	private int screenWidth;
 	private int screenHeight;
+    boolean keepPlaying;
 	
 	private JFrame frame = new JFrame("dunk-a-prof");
 	
-	public void run(){
+	public Game(){
+		keepPlaying = true;
+	}
+	
+	public void setKeepPlaying(){
+		keepPlaying = false;
+	}
+	
+	public boolean getKeepPlaying(){
+		return keepPlaying;
+	}
+	
+	public void createAndShowGUI(){
+		Game game = new Game();
+		keepPlaying = true;
 		screenWidth = 1280;
 		screenHeight = 720;
 		
@@ -25,7 +40,7 @@ public class Game extends JPanel implements Runnable{
 		frame.setSize(new Dimension(screenWidth, screenHeight));  //default is supposed to be 1280 x 720
 		frame.setVisible(true);
 		
-		gameDrawing = new SimpleGame(screenWidth, screenHeight);
+		gameDrawing = new SimpleGame();
 		gameDrawing.initializeGame();
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(gameDrawing);
@@ -39,14 +54,15 @@ public class Game extends JPanel implements Runnable{
 	}
 	
 	public static void main(String[] args){
-		Thread game = (new Thread(new Game()));
-		game.start();
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		final Game game = new Game();
+		SwingUtilities.invokeLater(new Runnable(){
+
+			@Override
+			public void run() {
+				game.createAndShowGUI();
+			}
+			
+		});
 	}
 
 }

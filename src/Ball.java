@@ -39,8 +39,19 @@ public class Ball extends SimpleGame implements ActionListener{
 		time.start();
 	}
 	
-	public void setYPos(){
+	public void downSpeed(){
 		ySpeed = 1;
+	}
+	
+	public void upSpeed(){
+		ySpeed = -1;
+	}
+	
+	public boolean topHalf(int yPos, int height){
+		if(ballYPos < (yPos + height) - (height/2))
+			return true;
+		else
+			return false;
 	}
 	
 	public int getBallXPos(){
@@ -59,26 +70,23 @@ public class Ball extends SimpleGame implements ActionListener{
 		ballXPos = ballXPos + speed;
 		ballYPos = ballYPos + ySpeed;
 		
-		System.out.println(ballYPos - ballDiameter);
-		System.out.println(getHeight());
-		
-		if(ballYPos + ballDiameter > getHeight())
+		if(ballYPos + (2*ballDiameter) > getHeight() - 1)
 			ySpeed = -1;
 
 		if(ballYPos < 1)
 			ySpeed = 1;
 		
-		if(ballXPos > 750){
+		if(ballXPos > 1230){
 			speed = -(startSpeed);
-			super.setBallLeftOrRight(false);
+			setBallLeftOrRight(false);
 		}
-
+		
 		if(ballXPos < 50){
 			speed = startSpeed;
-			super.setBallLeftOrRight(true);
+			setBallLeftOrRight(true);
 		}
 
-        repaint();
+        //repaint();
 	}
 	
 	public void paint(Graphics g){

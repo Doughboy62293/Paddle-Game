@@ -12,27 +12,26 @@ import javax.swing.Timer;
 public class SimpleGame extends Game implements ActionListener, KeyListener {
 	private Ball ball;
 	private Paddle1 paddle1;
-	private Timer time;
-	private final int screenWidth;
-	private final int screenHeight;
+	Timer time;
+	private int screenWidth;
+	private int screenHeight;
 	
 	// Left = false, Right = true
-	private boolean ballLeftOrRight;
+	private static boolean ballLeftOrRight;
 	
 	public SimpleGame(){
 		this.screenWidth = 1280;
 		this.screenHeight = 720;
-	}
-	
-	public SimpleGame(int screenWidth, int screenHeight){
-		this.screenWidth = screenWidth;
-		this.screenHeight = screenHeight;
-		addKeyListener(this);
+		this.addKeyListener(this);
 		this.setFocusable(true);
 	}
 	
 	public void setBallLeftOrRight(boolean value){
 		ballLeftOrRight = value;
+	}
+	
+	public boolean getBallLeftOrRight(){
+		return ballLeftOrRight;
 	}
 	
 	public int getWidth(){
@@ -46,12 +45,12 @@ public class SimpleGame extends Game implements ActionListener, KeyListener {
 	public void initializeGame(){
 		paddle1 = new Paddle1();
 		ball = new Ball();
+		ballLeftOrRight = true;
 		time = new Timer(5, this);
-		time.start();		
+		time.start();
 	}
 	
 	public void keyPressed(KeyEvent e){
-		System.out.println("Pressed");
 	    int keyCode = e.getKeyCode();
 	    switch( keyCode ) { 
 	        case KeyEvent.VK_UP:
@@ -91,10 +90,21 @@ public class SimpleGame extends Game implements ActionListener, KeyListener {
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if(!ballLeftOrRight && ball.getBallXPos() < 51)
-			if(paddle1.isAHit(ball.getBallYPos(), ball.getBallDiameter()))
-				ball.setYPos();
-		
+		if(!getBallLeftOrRight() && ball.getBallXPos() < 51){
+			System.out.println("1");
+			if(paddle1.isAHit(ball.getBallYPos(), ball.getBallDiameter())){
+				System.out.println("2");
+				if(ball.topHalf(paddle1.getYPos(), paddle1.getYHeight())){
+					System.out.println("3");
+					ball.upSpeed();
+				}else{
+					ball.downSpeed();
+				}
+			}
+		}
 		repaint();
+		
+		
 	}
+	
 }

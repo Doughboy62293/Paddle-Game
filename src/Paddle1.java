@@ -26,18 +26,24 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 		
 		time = new Timer(5, this);
 		time.start();
-
 	}
 	
 	public boolean isAHit(int topYValue, int lengthOfObject){
-		if(topYValue > yPos && topYValue < yPos+height)
+		if(topYValue > yPos-lengthOfObject && topYValue < yPos+height)
 			return true;
 		else
 			return false;
 	}
+	
+	public int getYPos(){
+		return yPos;
+	}
+	
+	public int getYHeight(){
+		return height;
+	}
 		
 	public void decYPos(int value){
-		System.out.println("down" + yPos + " " + (getHeight() - height));
 		if(yPos - ((height) / 2) < (getHeight() - (2 * height)))
 			yPos+=value;
 	}
