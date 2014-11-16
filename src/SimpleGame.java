@@ -104,18 +104,20 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		Object[] options = {"Yes",
 		                    "No",};
 		int n = JOptionPane.showOptionDialog(frame,
-		    "Would you like some green eggs to go "
-		    + "with that ham?",
-		    "A Silly Question",
+		    "Would you like to "
+		    + "play again?",
+		    "Paddle-Game",
 		    JOptionPane.YES_NO_OPTION,
 		    JOptionPane.QUESTION_MESSAGE,
 		    null,
 		    options,
 		    options[1]);
 		
-		if(n == 1){
+		if(n == 0){
 			resetGame();
 			n = -1;
+		}else if(n == 1){
+			System.exit(0);
 		}
 	}
 	

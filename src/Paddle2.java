@@ -28,8 +28,8 @@ public class Paddle2 extends SimpleGame implements ActionListener{
 		width = 20;
 		height = 100;
 		
-		time = new Timer(10, this);
-		time.start();
+		//time = new Timer(10, this);
+		//time.start();
 	}
 	
 	public void reset(){
