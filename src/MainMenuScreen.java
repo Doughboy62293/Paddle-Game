@@ -65,8 +65,8 @@ private SimpleGame gameDrawing;
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				gameDrawing.initializeGame(ballSpeed, computerPaddleSpeed, frame);
 				ClearScreenContents();
-				gameDrawing.initializeGame(ballSpeed, computerPaddleSpeed);
 				gameDrawing.setKeepGoing(true);
 				NewPane(gameDrawing);
 			}

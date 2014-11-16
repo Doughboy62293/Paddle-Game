@@ -23,9 +23,6 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 		yPos = 20;
 		width = 20;
 		height = 100;
-		
-		time = new Timer(4, this);
-		time.start();
 	}
 	
 	public boolean isAHit(int topYValue, int lengthOfObject){
@@ -33,6 +30,13 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 			return true;
 		else
 			return false;
+	}
+	
+	public void reset(){
+		xPos = 30;
+		yPos = 20;
+		width = 20;
+		height = 100;
 	}
 	
 	public int getYPos(){

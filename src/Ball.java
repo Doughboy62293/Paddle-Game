@@ -12,7 +12,7 @@ import javax.swing.Timer;
 
 public class Ball extends SimpleGame implements ActionListener{
 	private static int ballDiameter;
-	private static int ballXPos;
+	private int ballXPos;
 	private int ballYPos;
 	private int speed;
 	private int ySpeed;
@@ -40,8 +40,17 @@ public class Ball extends SimpleGame implements ActionListener{
 			ball_full = ImageIO.read(getClass().getResource("Ball_full.png"));
 		} catch (IOException e) {
 		}
+		
 		time = new Timer(5, this);
 		time.start();
+	}
+	
+	public void reset(){
+		speed = startSpeed;
+		ySpeed = 0;
+		ballDiameter = 40;
+		ballXPos = 50;
+		ballYPos = 200;
 	}
 	
 	/*

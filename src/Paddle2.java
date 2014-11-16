@@ -32,6 +32,13 @@ public class Paddle2 extends SimpleGame implements ActionListener{
 		time.start();
 	}
 	
+	public void reset(){
+		xPos = 1200;
+		yPos = 20;
+		width = 20;
+		height = 100;
+	}
+	
 	public void setBallPos(int currentBallYPos, int currentBallDiameter){
 		this.currentBallYPos = currentBallYPos;
 		this.currentBallDiameter = currentBallDiameter;

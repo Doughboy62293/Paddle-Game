@@ -1,13 +1,20 @@
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.JPopupMenu;
+
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class SimpleGame extends JPanel implements ActionListener, KeyListener {
@@ -18,6 +25,9 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	private Timer time;
 	private int screenWidth;
 	private int screenHeight;
+	private int difficultySpeed;
+	private int computerSpeed;
+	private Frame frame;
 	private static boolean keepGoing;
 	// Left = false, Right = true
 	private static boolean ballLeftOrRight;
@@ -27,9 +37,13 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		this.screenHeight = 720;
 	}
 	
-	public void initializeGame(int difficultySpeed, int computerSpeed){	
+	public void initializeGame(int difficultySpeed, int computerSpeed, Frame frame){	
 		this.setFocusable(true);
 		this.addKeyListener(this);
+		this.frame = frame;
+		
+		this.difficultySpeed = difficultySpeed;
+		this.computerSpeed = computerSpeed;
 				
 		ballLeftOrRight = true;
 		keepGoing = false;
@@ -70,9 +84,39 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		keepGoing = value;
 	}
 	
+	public void resetGame(){				
+		ballLeftOrRight = true;
+		keepGoing = true;
+		ball.reset();
+		paddle1.reset();
+		paddle2.reset();
+		score = new Scoreboard();
+		time.start();
+	}
+	
 	public void stopGame(){
+		System.out.println("HERE");
+		time.stop();
 		keepGoing = false;
 		ball.setHorizontalSpeed(0);
+		
+		//Custom button text
+		Object[] options = {"Yes",
+		                    "No",};
+		int n = JOptionPane.showOptionDialog(frame,
+		    "Would you like some green eggs to go "
+		    + "with that ham?",
+		    "A Silly Question",
+		    JOptionPane.YES_NO_OPTION,
+		    JOptionPane.QUESTION_MESSAGE,
+		    null,
+		    options,
+		    options[1]);
+		
+		if(n == 1){
+			resetGame();
+			n = -1;
+		}
 	}
 	
 	/*
