@@ -27,7 +27,7 @@ public class Game extends JPanel implements Runnable{
 		frame.setSize(new Dimension(screenWidth, screenHeight));  //default is supposed to be 1280 x 720
 		frame.setVisible(true);
 		
-		menu = new MainMenuScreen(frame);
+		menu = new MainMenuScreen(frame, screenWidth, screenHeight);
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(menu);
 		frame.getContentPane().repaint();

@@ -21,6 +21,7 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	private Ball ball;
 	private Paddle1 paddle1;
 	private Paddle2 paddle2;
+	private Background background;
 	private Scoreboard score;
 	private Timer time;
 	private int screenWidth;
@@ -37,6 +38,11 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		this.screenHeight = 720;
 	}
 	
+	public SimpleGame(int screenWidth, int screenHeight){
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
+	}
+	
 	public void initializeGame(int difficultySpeed, int computerSpeed, Frame frame){	
 		this.setFocusable(true);
 		this.addKeyListener(this);
@@ -47,6 +53,7 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 				
 		ballLeftOrRight = true;
 		keepGoing = false;
+		background = new Background("green-soccer-field.jpg");
 		ball = new Ball(difficultySpeed);
 		paddle1 = new Paddle1();
 		paddle2 = new Paddle2(computerSpeed);
@@ -175,18 +182,6 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	public void keyTyped(KeyEvent e){}
 	
 	/**
-	 * Call the paint methods of all our objects here
-	 */
-	public void paintComponent(final Graphics g){
-		super.paintComponent(g);
-		
-		ball.paint(g);
-		paddle1.paint(g);
-		paddle2.paint(g);
-		score.paint(g);
-	}
-	
-	/**
 	 * Check here to see status of game
 	 */
 	public void update(){
@@ -212,6 +207,19 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e){		
 		update();
 		repaint();
+	}
+	
+	/**
+	 * Call the paint methods of all our objects here
+	 */
+	public void paintComponent(final Graphics g){
+		super.paintComponent(g);
+		
+		background.paint(g);
+		ball.paint(g);
+		paddle1.paint(g);
+		paddle2.paint(g);
+		score.paint(g);
 	}
 	
 }

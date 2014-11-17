@@ -22,8 +22,8 @@ private SimpleGame gameDrawing;
 	 * Initialize our game in background
 	 * for faster loading time
 	 */
-	public MainMenuScreen(JFrame frame){
-		gameDrawing = new SimpleGame();
+	public MainMenuScreen(JFrame frame, int screenWidth, int screenHeight){
+		gameDrawing = new SimpleGame(screenWidth, screenHeight);
 		this.frame = frame;
 		ballSpeed = 2;
 		computerPaddleSpeed = 2;
@@ -133,13 +133,13 @@ private SimpleGame gameDrawing;
 	    String keyCode = e.getActionCommand();
 	    if (keyCode == "easy"){
         	ballSpeed = 2;
-        	computerPaddleSpeed = 2;
+        	computerPaddleSpeed = 1;
 	    }else if (keyCode == "medium"){
         	ballSpeed = 3;
-        	computerPaddleSpeed = 4;
+        	computerPaddleSpeed = 2;
 	    }else if (keyCode == "hard"){
         	ballSpeed = 6;
-        	computerPaddleSpeed = 8;
+        	computerPaddleSpeed = 4;
 	    }
 	}
 }

@@ -59,7 +59,7 @@ public class Paddle1 extends SimpleGame implements ActionListener{
 	
 	public void paint(Graphics g){
 		//ball_full_resizable.createGraphics();
-		g.setColor(Color.BLACK);
-		g.drawRect(xPos, yPos, width, height);
+		g.setColor(Color.WHITE);
+		g.fillRect(xPos, yPos, width, height);
 	}	
 }
