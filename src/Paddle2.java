@@ -2,12 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 
@@ -28,11 +22,7 @@ public class Paddle2 extends SimpleGame implements ActionListener{
 		width = 20;
 		height = 100;
 		
-<<<<<<< HEAD
 		time = new Timer(5, this);
-=======
-		time = new Timer(10, this);
->>>>>>> e8506f16ec5ef36aa9f32421fb847e6da2a4607e
 		time.start();
 	}
 	

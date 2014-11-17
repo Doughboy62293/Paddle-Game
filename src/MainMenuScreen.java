@@ -1,5 +1,3 @@
-
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,21 +10,38 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 public class MainMenuScreen extends Game implements ActionListener{
-
-private SimpleGame gameDrawing;
+	private SimpleGame gameDrawing;
+	private Options options;
 	private JFrame frame;
 	private int ballSpeed;
+	private String background;
 	private int computerPaddleSpeed;
 
+	public MainMenuScreen(JFrame frame, int screenWidth, int screenHeight, String background){
+		this.frame = frame;
+		this.background = background;
+		
+		gameDrawing = new SimpleGame(screenWidth, screenHeight);
+		options = new Options(frame, screenWidth, screenHeight);
+		ballSpeed = 2;
+		computerPaddleSpeed = 2;
+	}
+	
 	/*
 	 * Initialize our game in background
 	 * for faster loading time
 	 */
 	public MainMenuScreen(JFrame frame, int screenWidth, int screenHeight){
-		gameDrawing = new SimpleGame(screenWidth, screenHeight);
 		this.frame = frame;
+		
+		gameDrawing = new SimpleGame(screenWidth, screenHeight);
+		options = new Options(frame, screenWidth, screenHeight);
 		ballSpeed = 2;
 		computerPaddleSpeed = 2;
+	}
+	
+	public MainMenuScreen(){
+		
 	}
 	
 	/**
@@ -57,6 +72,7 @@ private SimpleGame gameDrawing;
 	 *     Easy, Medium, Hard
 	 */
 	public void paintComponent(final Graphics g){
+		super.paintComponent(g);
 		setLayout(null);
 		
 		/*
@@ -65,7 +81,7 @@ private SimpleGame gameDrawing;
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gameDrawing.initializeGame(ballSpeed, computerPaddleSpeed, frame);
+				gameDrawing.initializeGame(ballSpeed, computerPaddleSpeed, frame, background);
 				ClearScreenContents();
 				gameDrawing.setKeepGoing(true);
 				NewPane(gameDrawing);
@@ -79,6 +95,12 @@ private SimpleGame gameDrawing;
 		 * Options button
 		 */
 		JButton btnOptions = new JButton("Options");
+		btnOptions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClearScreenContents();
+				NewPane(options);
+			}
+		});
 		btnOptions.setBounds(150, 138, 138, 25);
 		add(btnOptions);
 		

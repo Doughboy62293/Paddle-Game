@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -8,13 +7,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.JPopupMenu;
-
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 public class SimpleGame extends JPanel implements ActionListener, KeyListener {
@@ -43,7 +36,7 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 		this.screenHeight = screenHeight;
 	}
 	
-	public void initializeGame(int difficultySpeed, int computerSpeed, Frame frame){	
+	public void initializeGame(int difficultySpeed, int computerSpeed, Frame frame, String background){	
 		this.setFocusable(true);
 		this.addKeyListener(this);
 		this.frame = frame;
@@ -53,7 +46,7 @@ public class SimpleGame extends JPanel implements ActionListener, KeyListener {
 				
 		ballLeftOrRight = true;
 		keepGoing = false;
-		background = new Background("green-soccer-field.jpg");
+		this.background = new Background(background);
 		ball = new Ball(difficultySpeed);
 		paddle1 = new Paddle1();
 		paddle2 = new Paddle2(computerSpeed);
